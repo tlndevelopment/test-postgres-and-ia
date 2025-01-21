@@ -33,7 +33,7 @@ public class UsuarioService {
 	}
 	
 	private void validaLogin(Usuario usuario) {
-		Optional<Usuario> userFound = usuarioRepository.findByLogin(usuario.getLogin());
+		Optional<Usuario> userFound = findByLogin(usuario.getLogin());
 		if (userFound.isPresent()) {
 			throw new ServiceException("Este login já está em uso");
 		}
@@ -44,6 +44,10 @@ public class UsuarioService {
 		if (userFound.isPresent()) {
 			throw new ServiceException("Este email já está em uso");
 		}
+	}
+	
+	public Optional<Usuario> findByLogin(String login) {
+		return usuarioRepository.findByLogin(login);
 	}
 	
 	public UsuarioDTO save(UsuarioDTO dto) {
