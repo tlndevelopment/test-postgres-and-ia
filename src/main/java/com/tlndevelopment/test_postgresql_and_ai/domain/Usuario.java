@@ -31,7 +31,7 @@ public class Usuario {
 	private String login;
 	
 	@NotNull(message = "Senha não pode ser nula")
-	@Size(min = 6, max = 30, message = "a senha deve ter entre 6 e 30 caracteres")
+	@Size(min = 5, max = 80, message = "a senha deve ter entre 5 e 80 caracteres")
 	private String senha;
 	
 	@NotNull(message = "Email não pode ser nulo")

@@ -34,7 +34,7 @@ public class UsuarioController {
 	}
 	
 	@GetMapping(value = "/usuario/{id}")
-	public ResponseEntity<?> getUser(@PathVariable Integer id) {
+	public ResponseEntity<UsuarioDTO> getUser(@PathVariable Integer id) {
 		UsuarioDTO usuario = usuarioService.findById(id);
 		
 		return new ResponseEntity<UsuarioDTO>(usuario, HttpStatus.OK);

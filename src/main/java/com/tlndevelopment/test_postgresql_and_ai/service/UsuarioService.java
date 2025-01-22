@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.tlndevelopment.test_postgresql_and_ai.domain.Filme;
@@ -20,11 +22,13 @@ public class UsuarioService {
 
 	private final UsuarioRepository usuarioRepository;
     private final FilmeRepository filmeRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UsuarioService(UsuarioRepository usuarioRepository, FilmeRepository filmeRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepository, FilmeRepository filmeRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
         this.filmeRepository = filmeRepository;
+        this.passwordEncoder = new BCryptPasswordEncoder();
     }
 	
 	private void validaAtributos(Usuario usuario) {
@@ -47,12 +51,15 @@ public class UsuarioService {
 	}
 	
 	public Optional<Usuario> findByLogin(String login) {
-		return usuarioRepository.findByLogin(login);
+		Optional<Usuario> userFound = usuarioRepository.findByLogin(login);
+		if(!userFound.isPresent())
+			throw new ServiceException("Usuário não encontrado");
+		return userFound;
 	}
 	
 	public UsuarioDTO save(UsuarioDTO dto) {
 		String login = dto.getLogin();
-		String senha = dto.getSenha();
+		String senha = passwordEncoder.encode(dto.getSenha());
 		String email = dto.getEmail();
 		String nome = dto.getNome();
 		
@@ -87,7 +94,7 @@ public class UsuarioService {
 			} else
 				usuarioDTO.setLogin(usuarioEditado.getLogin());
 			if(usuarioDTO.getSenha() != null)
-				usuarioEditado.setSenha(usuarioDTO.getSenha());
+				usuarioEditado.setSenha(passwordEncoder.encode(usuarioDTO.getSenha()));
 			else
 				usuarioDTO.setSenha(usuarioEditado.getSenha());
 			if(usuarioDTO.getEmail() != null) {
@@ -99,7 +106,7 @@ public class UsuarioService {
 				usuarioEditado.setNome(usuarioDTO.getNome());
 			else
 				usuarioDTO.setNome(usuarioEditado.getNome());
-			
+			usuarioEditado.getSenha().length();
 			usuarioRepository.saveAndFlush(usuarioEditado);
 			
 			usuarioDTO.setFilmes(populaFilmes(usuarioEditado.getFilmes()));
