@@ -30,14 +30,32 @@ public class JwtUtil {
 				.compact();
 	}
 	
-	@SuppressWarnings("deprecation")
+	public String generateRefreshToken(String login) {
+        return generateToken(login);
+    }
+	
+//	@SuppressWarnings("deprecation")
+//	public String getUsernameFromToken(String token) {
+//		return Jwts.parser()
+//				.setSigningKey(secret)
+//				.parseClaimsJws(token)
+//				.getBody()
+//				.getSubject();
+//	}
+	
 	public String getUsernameFromToken(String token) {
-		return Jwts.parser()
-				.setSigningKey(secret)
-				.parseClaimsJws(token)
-				.getBody()
-				.getSubject();
-	}
+        try {
+            if (!token.matches("^[A-Za-z0-9-_\\.]+\\.[A-Za-z0-9-_\\.]+\\.[A-Za-z0-9-_\\.]+$")) {
+                System.out.println("Token JWT malformatado: " + token);
+                throw new IllegalArgumentException("Token JWT malformatado.");
+            }
+
+            return extractClaim(token, Claims::getSubject); // Extrai o "subject" (nome do usuário) do token.
+        } catch (Exception e) {
+            System.out.println("Erro ao extrair o username do token: " + e.getMessage());
+            throw e; // Propaga a exceção após registrar o erro.
+        }
+    }
 	
     private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());

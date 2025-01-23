@@ -37,7 +37,7 @@ public class UsuarioService {
 	}
 	
 	private void validaLogin(Usuario usuario) {
-		Optional<Usuario> userFound = findByLogin(usuario.getLogin());
+		Optional<Usuario> userFound = usuarioRepository.findByLogin(usuario.getLogin());
 		if (userFound.isPresent()) {
 			throw new ServiceException("Este login já está em uso");
 		}

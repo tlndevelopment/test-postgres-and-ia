@@ -40,13 +40,6 @@ public class UsuarioController {
 		return new ResponseEntity<UsuarioDTO>(usuario, HttpStatus.OK);
 	}
 	
-	@PostMapping(value = "/usuario")
-	public ResponseEntity<UsuarioDTO> createUser(@RequestBody @Valid UsuarioDTO usuarioDTO) {
-		UsuarioDTO usuario = usuarioService.save(usuarioDTO);
-		
-		return new ResponseEntity<UsuarioDTO>(usuario, HttpStatus.CREATED);
-	}
-	
 	@PutMapping(value = "/usuario/{id}")
 	public ResponseEntity<UsuarioDTO> updateUser(@RequestBody @Valid UsuarioDTO usuarioDTO, @PathVariable Integer id) {
 		UsuarioDTO usuario = usuarioService.update(usuarioDTO, id);
