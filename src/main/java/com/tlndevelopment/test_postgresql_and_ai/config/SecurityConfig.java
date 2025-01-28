@@ -7,14 +7,12 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.tlndevelopment.test_postgresql_and_ai.service.CustomUserDetailsService;
-import com.tlndevelopment.test_postgresql_and_ai.service.UsuarioService;
 import com.tlndevelopment.test_postgresql_and_ai.util.JwtAuthenticationFilter;
 
 @Configuration

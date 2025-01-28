@@ -1,6 +1,7 @@
 package com.tlndevelopment.test_postgresql_and_ai.domain;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -45,7 +46,7 @@ public class Usuario {
 			joinColumns = @JoinColumn(name = "usuario_id"),
 			inverseJoinColumns = @JoinColumn(name = "filme_id")
 	)
-	private List<Filme> filmes;
+	private List<Filme> filmes = new ArrayList<>();
 	
 	public Usuario() {}
 	

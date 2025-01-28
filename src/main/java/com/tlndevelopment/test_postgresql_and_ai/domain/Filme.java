@@ -1,5 +1,6 @@
 package com.tlndevelopment.test_postgresql_and_ai.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -26,7 +27,7 @@ public class Filme {
 	private int anoLancamento;
 	
 	@ManyToMany(mappedBy = "filmes")
-	private List<Usuario> usuarios;
+	private List<Usuario> usuarios = new ArrayList<>();
 	
 	public Filme() {}
 	

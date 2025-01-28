@@ -15,7 +15,7 @@ public class UsuarioDTO {
 	
 	private String email;
 	
-	private List<FilmeDTO> filmes = new ArrayList<>();;
+	private List<FilmeDTO> filmes = new ArrayList<>();
 	
 	public UsuarioDTO() {}
 	
